@@ -1,0 +1,22 @@
+SELECT supplier_order.id as cmd_ref,
+       supplier_order_article.uvc_quantity,
+       supplier_order.state,
+       supplier.name as supplier_name,
+       article.id as article_id,
+       article.name as article_name,
+       supplier.name,
+       supplier_order.warehouse_delivery_date_end
+  FROM (
+           (
+               supplier
+               INNER JOIN
+               supplier_order ON supplier.id = supplier_order.supplier_id
+           )
+           INNER JOIN
+           supplier_order_article ON supplier_order.id = supplier_order_article.supplier_order_id
+       )
+       INNER JOIN
+       article ON supplier_order_article.article_id = article.id
+ WHERE ( ( (supplier.created_at) > 2 / 28 / 2019 AND 
+           (supplier.created_at) < 4 / 1 / 2019) );
+;

@@ -1,0 +1,25 @@
+SELECT 
+    C.id AS cmd_id,
+    C.state AS cmd_status,
+    S.name AS supplier_name,
+    A.id AS article_id,
+    A.name AS article_name,
+    CA.uvc_quantity AS quantity,
+    C.created_at AS cmd_register,
+    C.warehouse_delivery_date_end AS arrival_date
+FROM
+    (SELECT 
+        id,
+        name 
+    FROM 
+        supplier 
+    WHERE 
+        DATE(created_at, '%m/%d/%Y') LIKE '03/__/2019'
+    ) AS S,
+    article AS A,
+    supplier_order AS C,
+    supplier_order_article AS CA
+WHERE
+    C.supplier_id = S.id
+    AND A.supplier_id = S.id
+    AND CA.article_id = A.id;
